@@ -48,7 +48,7 @@ def close_db(error):
 @app.route('/')
 def index():
     db = get_db()
-    cur = db.execute("select title, url from links")
+    cur = db.execute("select title, url from Link")
     entries = cur.fetchall()
     return render_template('index.html', entries=entries)
 
@@ -69,7 +69,7 @@ def submit():
         title = re.search('^.{1,260}\\b', title if title else address).string
 
         db = get_db()
-        db.execute('insert into links(title, url) values(?, ?)', [title, address])
+        db.execute('insert into Link(title, url) values(?, ?)', [title, address])
         db.commit()
 
     return redirect(url_for('index'))
@@ -78,7 +78,8 @@ def submit():
 @app.route('/delete')
 def delete():
     db = get_db()
-    db.execute('delete from links')
+    db.execute('delete from Link')
+    db.execute('delete from Folder')
     db.commit()
     return redirect(url_for('index'))
 
