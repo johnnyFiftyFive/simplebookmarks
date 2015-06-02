@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head lang="pl">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<form method="POST" action="/submit">
+    <label for="address">Adres:</label><input id="address" name="address"/>
+    <input type="submit" value="Wyślij"/>
+</form>
+
+
+<ul>
+    {% for entry in entries %}
+    <li><a href="{{ entry.url }}" title="{{ entry.title }}">{{ entry.title }}</a></li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
