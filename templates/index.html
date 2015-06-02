@@ -2,21 +2,27 @@
 <html>
 <head lang="pl">
     <meta charset="UTF-8">
-    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple Bookmarks</title>
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" type="text/css" rel="stylesheet">
 </head>
 <body>
-
-<form method="POST" action="/submit">
-    <label for="address">Adres:</label><input id="address" name="address"/>
-    <input type="submit" value="Wyślij"/>
+<div >
+<form method="POST" action="/submit" class="form-inline text-center">
+    <label for="address">Adres:</label>
+    <input id="address" name="address" class="form-control input-sm" placeholder="http://any-page.com" style="width: 75%"/>
+    <button type="submit" class="btn btn-primary">Dodaj</button>
 </form>
 
 
-<ul>
+<ul class="container">
     {% for entry in entries %}
     <li><a href="{{ entry.url }}" title="{{ entry.title }}">{{ entry.title }}</a></li>
     {% endfor %}
 </ul>
-
+</div>
+<script src="{{ url_for('static', filename='js/jquery-2.1.4.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
 </body>
 </html>
