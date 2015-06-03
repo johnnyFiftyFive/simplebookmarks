@@ -6,21 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Simple Bookmarks</title>
     <link href="{{ url_for('static', filename='css/bootstrap.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" type="text/css" rel="stylesheet">
 </head>
 <body>
-<div >
-<form method="POST" action="/submit" class="form-inline text-center">
-    <label for="address">Adres:</label>
-    <input id="address" name="address" class="form-control input-sm" placeholder="http://any-page.com" style="width: 75%"/>
-    <button type="submit" class="btn btn-primary">Dodaj</button>
-</form>
+<div class="container">
+    <form method="POST" action="/submit" class="form-inline text-center">
+        <label for="address">Adres</label>
+        <input id="address" name="address" class="form-control input-sm" placeholder="http://any-page.com"
+               style="width: 75%"/>
+        <button type="submit" class="btn btn-primary">Dodaj</button>
+    </form>
 
-
-<ul class="container">
-    {% for entry in entries %}
-    <li><a href="{{ entry.url }}" title="{{ entry.title }}">{{ entry.title }}</a></li>
-    {% endfor %}
-</ul>
+    <div class="container">
+        {% for entry in entries %}
+        <div class="link">
+            <a href="{{ entry.url }}" title="{{ entry.title }}">{{ entry.title|safe }}</a>
+            <small>{{ entry.url|truncate(200, true) }}</small>
+        </div>
+        {% else %}
+            <p class="alert alert-info text-center" role="alert"><strong>Pusto?</strong> Dodaj nowe wpisy!</p>
+        {% endfor %}
+    </div>
 </div>
 <script src="{{ url_for('static', filename='js/jquery-2.1.4.js') }}"></script>
 <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
