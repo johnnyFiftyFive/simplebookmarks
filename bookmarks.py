@@ -5,7 +5,7 @@ import os
 import re
 import database
 from BeautifulSoup import BeautifulSoup
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, jsonify
 from werkzeug.utils import redirect
 
 app = Flask(__name__)
@@ -17,7 +17,6 @@ app.config.update(dict(
     USERNAME='admin',
     PASSWORD='default'
 ))
-
 
 
 @app.route('/')
@@ -72,8 +71,10 @@ def get_folder_tree(id=None, name=None):
 
 @app.route('/folders')
 def folders():
-    tree = database.get_folder_tree()['children']
+    tree = database.get_folder_tree()
     return render_template('foldery.html', tree=tree)
+
+
 
 
 if __name__ == '__main__':

@@ -1,8 +1,10 @@
-from bookmarks import app
 from sqlite3 import dbapi2 as sqlite3
+
+from bookmarks import app
 from flask import g
 
 FOLDER_QUERY = "SELECT id, name, parent FROM Folder WHERE parent is :id"
+
 
 def init_db():
     db = get_db()
@@ -22,17 +24,27 @@ def connect_db():
     rv.row_factory = sqlite3.Row
     return rv
 
-def get_folder_tree(id=None, name=None):
+
+def get_folder_tree(id=None):
     db = get_db()
     cur = db.execute(FOLDER_QUERY, {'id': id})
-    result = {'name': name}
-    children = {}
+    folders = []
     for c in cur.fetchall():
-        children[c['id']] = get_folder_tree(c['id'], c['name'])
-    result['children'] = children
-    return result if result else name
+        folder = Folder(c['id'], c['name'])
+        folder.children = get_folder_tree(c['id'])
+        folders.append(folder)
+    return folders
+
+
 
 @app.teardown_appcontext
 def close_db(error):
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
+
+
+class Folder:
+    def __init__(self, id=None, name=None):
+        self.id = id
+        self.name = name
+        self.children = []
