@@ -1,3 +1,4 @@
+import json
 from sqlite3 import dbapi2 as sqlite3
 
 from bookmarks import app
@@ -36,7 +37,6 @@ def get_folder_tree(id=None):
     return folders
 
 
-
 @app.teardown_appcontext
 def close_db(error):
     if hasattr(g, 'sqlite_db'):
@@ -48,3 +48,6 @@ class Folder:
         self.id = id
         self.name = name
         self.children = []
+
+    def to_json(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)

@@ -1,11 +1,10 @@
-import json
 import urllib2
 
 import os
 import re
 import database
 from BeautifulSoup import BeautifulSoup
-from flask import Flask, render_template, url_for, request, jsonify
+from flask import Flask, render_template, url_for, request
 from werkzeug.utils import redirect
 
 app = Flask(__name__)
@@ -73,8 +72,7 @@ def get_folder_tree(id=None, name=None):
 def folders():
     tree = database.get_folder_tree()
     return render_template('foldery.html', tree=tree)
-
-
+    return tree[0].to_json()
 
 
 if __name__ == '__main__':
