@@ -7,22 +7,24 @@
     <title>Simple Bookmarks</title>
     <link href="{{ url_for('static', filename='css/bootstrap.css') }}" type="text/css" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/style.css') }}" type="text/css" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/jquery-2.1.4.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/folderlist.js') }}"></script>
+    <script>
+        function bajer(){
+            $.post("/folders", '',
+            function(data, status){
+                var result = init(data);
+                var d = 3;
+            });
+        }
+
+    </script>
 </head>
 <body>
 <div class="container">
-    <ul class="list">
-        {%- for folder in tree recursive %}
-        <li id="folderid-{{ folder.id }}">{{ folder.name }}
-            {% if folder.children %}
-            <ul>{{ loop(folder.children) }}</ul>
-            {%- endif %}
-        </li>
-        {% else %}
-        Brak folderów.
-        {%- endfor %}
-    </ul>
+    <button id="button" onclick="bajer()">Button</button>
 </div>
-<script src="{{ url_for('static', filename='js/jquery-2.1.4.js') }}"></script>
+
 <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
 </body>
 </html>

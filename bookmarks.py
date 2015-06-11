@@ -1,10 +1,11 @@
+import json
 import urllib2
 
 import os
 import re
 import database
 from BeautifulSoup import BeautifulSoup
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, Response
 from werkzeug.utils import redirect
 
 app = Flask(__name__)
@@ -44,7 +45,6 @@ def submit():
         db = database.get_db()
         db.execute('insert into Link(title, url) values(?, ?)', [title, address])
         db.commit()
-
     return redirect(url_for('index'))
 
 
@@ -68,11 +68,22 @@ def get_folder_tree(id=None, name=None):
     return result if result else name
 
 
-@app.route('/folders')
+@app.route('/folders', methods=['GET'])
 def folders():
+    # tree = database.get_folder_tree()
+    return render_template('foldery.html')
+
+
+@app.route('/folders', methods=['POST'])
+def folder_list():
     tree = database.get_folder_tree()
-    return render_template('foldery.html', tree=tree)
-    return tree[0].to_json()
+    resp = Response(status=200, mimetype='application/json')
+    resp.set_data(json.dumps(tree, default=folder_encoder, encoding='UTF-8', ensure_ascii=False))
+    return resp
+
+
+def folder_encoder(fol):
+    return fol.__dict__ if isinstance(fol, database.Folder) else fol
 
 
 if __name__ == '__main__':
