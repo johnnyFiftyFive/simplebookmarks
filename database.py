@@ -4,6 +4,7 @@ from sqlite3 import dbapi2 as sqlite3
 from bookmarks import app
 from flask import g
 
+DELETE_LINK_QUERY = 'DELETE FROM Link WHERE id = :id'
 FOLDER_QUERY = "SELECT id, name, parent FROM Folder WHERE parent is :id"
 
 
@@ -51,3 +52,10 @@ class Folder:
 
     def to_json(self):
         return json.dumps(self, default=lambda o: o.__dict__, indent=4)
+
+
+def delete_link(link_id):
+    db = get_db()
+    db.execute(DELETE_LINK_QUERY, {'id': link_id})
+    db.commit()
+    return
