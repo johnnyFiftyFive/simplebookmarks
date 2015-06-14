@@ -11,9 +11,16 @@ $("#confirmBtn").click(function () {
 
 });
 
-$(".delete-link").click(function () {
-    var id = $(this).data('id');
+function deleteItem(id) {
     $.post("/delete/" + id);
     $("#link-" + id).remove();
+}
+
+$(".delete-link").click(function () {
+    var id = $(this).data('id');
+    $(this).parent().slideUp(300, function () {
+        deleteItem(id)
+    });
+
 });
 
