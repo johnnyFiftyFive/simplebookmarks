@@ -5,8 +5,8 @@ from bookmarks import app
 from flask import g
 
 DELETE_LINK_QUERY = 'DELETE FROM Link WHERE id = :id'
-FOLDER_QUERY = "SELECT id, name, parent FROM Folder WHERE parent is :id"
-
+FOLDER_QUERY = 'SELECT id, name, parent FROM Folder WHERE parent is :id'
+UPDATE_LINK_QUERY = 'UPDATE Link SET title=:title, url=:url WHERE id=:id'
 
 def init_db():
     db = get_db()
@@ -59,3 +59,10 @@ def delete_link(link_id):
     db.execute(DELETE_LINK_QUERY, {'id': link_id})
     db.commit()
     return
+
+
+def update(data):
+    db = get_db()
+    items = db.execute(UPDATE_LINK_QUERY, (data['title'], data['url'], data['id']))
+    db.commit()
+    return items.rowcount

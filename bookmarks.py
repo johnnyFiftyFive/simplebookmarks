@@ -52,6 +52,14 @@ def submit():
     return redirect(url_for('index'))
 
 
+@app.route('/update/<int:id>', methods=['POST'])
+def update(id):
+    data = request.form
+    count = database.update(data)
+    resp = Response(status=200, content_type='application/json')
+    resp.data = {'count': count}
+    return resp
+
 @app.route('/delete/all')
 def delete():
     db = database.get_db()
