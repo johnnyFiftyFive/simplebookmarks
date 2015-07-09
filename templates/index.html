@@ -14,12 +14,16 @@
     <form method="POST" action="/submit" class="form-inline container center-block text-center" style="width:75%">
         <div class="row">
             <div class="col-md-1"><label for="address"></label></div>
-            <div class="col-md-10"><input id="address" name="address" class="form-control input-sm" style="width:100%" placeholder="http://any-page.com"/></div>
-            <div class="col-md-1"><button type="submit" class="btn btn-primary">Dodaj</button></div>
+            <div class="col-md-10"><input id="address" name="address" class="form-control input-sm" style="width:100%"
+                                          placeholder="http://any-page.com"/></div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-primary">Dodaj</button>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-1"><label for="tags"></label></div>
-            <div class="col-md-10"><input id="tags" name="tags" class="form-control input-xs" style="width:90%" placeholder="#tagi"/></div>
+            <div class="col-md-10"><input id="tags" name="tags" class="form-control input-xs" style="width:90%"
+                                          placeholder="#tagi"/></div>
             <div class="col-md-1"></div>
         </div>
     </form>
@@ -45,7 +49,8 @@
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
             <a href="{{ entry.url }}" id="link-{{ entry.id }}-itm" title="{{ entry.title }}">{{ entry.title|safe }}</a>
-            </span><small>{{ entry.url|truncate(200, true) }}</small>
+            </span>
+            <small>{{ entry.url|truncate(200, true) }}</small>
 
         </div>
         {% else %}
@@ -61,8 +66,44 @@
                     <h4 class="modal-title" id="modalLabel">Edytuj link</h4>
                 </div>
                 <div class="modal-body">
-                    <input type="text" id="link-title" class="form-control input-sm" placeholder="Tytuł odnośnika"/>
-                    <input type="text" id="link-address" class="form-control input-sm" placeholder="Adres odnośnika"/>
+                    <h5>Baza danych</h5>
+                    <div class="row">
+                        <div class="col-md-2">
+                            Host:
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" id="db-host" class="form-control input-md" placeholder="0.0.0.0"/>
+                        </div>
+                        <div class="col-md-2">
+                            Port:
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" id="db-port" class="form-control input-md" placeholder="3306"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            Użytkownik
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" id="db-user" class="form-control input-md" placeholder="root"/>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="password" id="db-pass" class="form-control input-md" placeholder="hasło"/>
+                        </div>
+                    </div>
+                    <h5>Kopie automatyczne</h5>
+                    <div class="row">
+                        <div class="col-md-2">
+                            Host:
+                        </div>
+                        <div class="col-md-4">
+                            <input type="time" id="sched_time" class="form-control input-md" value="12:00"/>
+                        </div>
+                        <div class="col-md-6">
+                            Port:
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
